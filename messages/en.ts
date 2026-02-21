@@ -1,0 +1,237 @@
+export const en = {
+  // App identity
+  appName: "JARYK",
+  appTagline: "Support & Safety",
+  appNameDiscreet: "Notes",
+
+  // Navigation
+  nav: {
+    home: "Home",
+    hub: "Educational Hub",
+    sos: "SOS",
+    chat: "AI Chat",
+    centers: "Help Centers",
+    profile: "Profile",
+    settings: "Settings",
+  },
+  navDiscreet: {
+    home: "Home",
+    hub: "Library",
+    sos: "Quick Action",
+    chat: "Assistant",
+    centers: "Locations",
+    profile: "Account",
+    settings: "Preferences",
+  },
+
+  // Welcome page
+  welcome: {
+    heading: "JARYK",
+    tagline: "Support & Safety",
+    feature1Title: "Immediate Help",
+    feature1Desc: "One-tap SOS to alert your emergency contacts",
+    feature2Title: "Knowledge & Resources",
+    feature2Desc: "Articles, legal guides, and support information",
+    feature3Title: "Confidential Support",
+    feature3Desc: "Discreet mode keeps your activity private",
+    getStarted: "Get Started",
+    learnMore: "Learn More",
+    privacyNote: "Your safety is our priority. All data stays on your device.",
+  },
+
+  // Auth page
+  auth: {
+    welcome: "Welcome",
+    subtitle: "Sign in or create an account to continue.",
+    signIn: "Sign In",
+    signUp: "Sign Up",
+    email: "Email",
+    emailPlaceholder: "your@email.com",
+    password: "Password",
+    passwordPlaceholder: "Enter your password",
+    createPassword: "Create a password",
+    fullName: "Full Name",
+    namePlaceholder: "Your name",
+    phone: "Phone (optional)",
+    phonePlaceholder: "+996 ...",
+    signingIn: "Signing in...",
+    signInBtn: "Sign In",
+    creatingAccount: "Creating account...",
+    createAccount: "Create Account",
+    continueGuest: "Continue as Guest",
+    guestNote: "Guest access allows you to use SOS and browse resources. Create an account to save your preferences.",
+    back: "Back",
+    showPassword: "Show password",
+    hidePassword: "Hide password",
+  },
+
+  // Home page
+  home: {
+    greeting: "You are not alone",
+    greetingDiscreet: "Welcome back",
+    subtitle: "Help is always within reach.",
+    subtitleDiscreet: "What would you like to do today?",
+    emergencySOS: "Emergency SOS",
+    emergencySOSDiscreet: "Quick Action",
+    sosSubtitle: "Tap to alert your emergency contacts",
+    sosSubtitleDiscreet: "Send a quick notification",
+    quickActions: "Quick Actions",
+    quickActionsDiscreet: "Actions",
+    emergencyContacts: "Emergency Contacts",
+    emergencyContactsDiscreet: "Saved Contacts",
+    viewAll: "View all",
+    call: "Call",
+    hubDesc: "Articles & guides",
+    centersDesc: "Find nearby help",
+    chatDesc: "Get guidance",
+  },
+
+  // SOS page
+  sos: {
+    title: "Emergency SOS",
+    titleDiscreet: "Quick Action",
+    confirm: "Send Emergency Alert",
+    confirmDiscreet: "Send Notification",
+    confirmDesc: "This will send an emergency alert to your trusted contacts with your current location.",
+    confirmDescDiscreet: "This will send a notification to your saved contacts with your current location.",
+    sending: "Sending alert...",
+    sendingDiscreet: "Sending notification...",
+    sendingDesc: "Notifying your emergency contacts with your location.",
+    sendingDescDiscreet: "Contacting your saved contacts.",
+    sent: "Alert Sent",
+    sentDiscreet: "Notification Sent",
+    sentDesc: "Your emergency contacts have been notified with your current location. Help is on the way.",
+    sentDescDiscreet: "Your contacts have been notified with your current location.",
+    backHome: "Back to Home",
+    callEmergency: "Call 112",
+    info: "Your emergency contacts will receive your GPS location via SMS.",
+    infoDiscreet: "Your contacts will receive your location.",
+    emergencyWarning: "If you are in immediate danger, call emergency services directly.",
+  },
+
+  // Hub page
+  hub: {
+    title: "Educational Hub",
+    titleDiscreet: "Library",
+    subtitle: "Articles, guides, and resources to help you.",
+    subtitleDiscreet: "Browse available materials.",
+    readTime: "min read",
+    noArticles: "No articles found.",
+    allCategories: "All",
+    placeholder: "Articles, guides, and resources will appear here in Phase 2.",
+  },
+
+  // Chat page
+  chat: {
+    title: "AI Chat",
+    titleDiscreet: "Assistant",
+    placeholder: "The AI assistant will be available here in Phase 2.",
+    unavailable: "Chat is currently unavailable. This feature is under development.",
+    inputPlaceholder: "Type your message...",
+    send: "Send",
+  },
+
+  // Centers page
+  centers: {
+    title: "Help Centers",
+    titleDiscreet: "Locations",
+    subtitle: "Find nearby support services.",
+    subtitleDiscreet: "Browse available locations.",
+    mapPlaceholder: "Interactive map coming soon",
+    noCenters: "No centers found.",
+    allTypes: "All",
+    directions: "Directions",
+    placeholder: "Map and center listings will appear here in Phase 2.",
+  },
+
+  // Profile page
+  profile: {
+    title: "Profile",
+    titleDiscreet: "Account",
+    subtitle: "Manage your personal information",
+    personalInfo: "Personal Information",
+    name: "Name",
+    email: "Email",
+    phone: "Phone",
+    emergencyContact: "Emergency Contacts",
+    emergencyContactDiscreet: "Saved Contacts",
+    contactName: "Contact Name",
+    contactPhone: "Contact Phone",
+    language: "Language",
+    edit: "Edit Profile",
+    member: "Account member",
+    addContact: "Add Contact",
+    goToSettings: "Settings",
+    comingSoon: "Profile management coming soon",
+    notSet: "Not set",
+    guestUser: "Guest User",
+    guestEmail: "Not signed in",
+  },
+
+  // Settings page
+  settings: {
+    title: "Settings",
+    titleDiscreet: "Preferences",
+    subtitle: "Manage your app preferences.",
+    discreet: "Discreet Mode",
+    discreetToggle: "Enable Discreet Mode",
+    discreetDesc: "Disguise the app with neutral labels and a plain color scheme for privacy.",
+    language: "Language",
+    languageDesc: "Choose your preferred language",
+    notifications: "Notifications",
+    notificationsDesc: "Notification preferences will be available in a future update.",
+    privacy: "Privacy",
+    privacyDesc: "Privacy controls will be available in a future update.",
+    pushNotifications: "Push Notifications",
+    pushDesc: "Get alerts about important updates",
+    emailNotifications: "Email Notifications",
+    emailDesc: "Receive support information via email",
+    support: "Support & Help",
+    supportDesc: "Need help? Contact support or view the FAQ.",
+    comingSoon: "Coming in Phase 3",
+  },
+
+  // About page
+  about: {
+    title: "About JARYK",
+    description: "JARYK is a safety-focused app designed to support women in Kyrgyzstan who are facing violence. It provides immediate help, educational resources, and connections to support services -- all in a discreet, privacy-first package.",
+    getStarted: "Get Started",
+    noAccountRequired: "No account required to access emergency features.",
+    features: {
+      sos: { title: "Emergency SOS", desc: "One-tap emergency alert to notify your trusted contacts with your location." },
+      contacts: { title: "Support Contacts", desc: "Access hotlines, legal aid, and psychological support services in Kyrgyzstan." },
+      education: { title: "Educational Resources", desc: "Articles on safety planning, legal rights, emotional health, and available services." },
+      map: { title: "Help Center Map", desc: "Find nearby shelters, crisis centers, and legal aid offices." },
+      chat: { title: "AI Assistant", desc: "Get guidance and answers to your questions in a safe, confidential chat." },
+      discreet: { title: "Discreet Mode", desc: "Disguise the app with neutral labels and colors for complete privacy." },
+    },
+  },
+
+  // Quick Exit
+  quickExit: "Exit",
+
+  // Empty states
+  empty: {
+    noArticles: "No articles yet",
+    articlesDesc: "Articles will be available soon",
+    chatUnavailable: "Chat unavailable",
+    chatUnavailableDesc: "The AI assistant is under development",
+    comingSoon: "Coming soon",
+  },
+
+  // Common
+  common: {
+    back: "Back",
+    cancel: "Cancel",
+    save: "Save",
+    on: "On",
+    off: "Off",
+    viewAll: "View all",
+    loading: "Loading...",
+    error: "Something went wrong",
+    retry: "Retry",
+    phase3: "Coming in Phase 3",
+  },
+} as const
+
+export type Messages = typeof en
