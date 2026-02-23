@@ -108,6 +108,11 @@ export const ru: Messages = {
     callEmergency: "Позвонить 112",
     info: "Ваши экстренные контакты получат ваше GPS-местоположение по SMS.",
     infoDiscreet: "Ваши контакты получат ваше местоположение.",
+    savedContacts: "Сохранённые контакты",
+    noSavedContacts: "Пока нет сохранённых контактов.",
+    removeContact: "Удалить контакт",
+    addAtLeastOneContact: "Добавьте хотя бы один контакт, чтобы отправить SOS.",
+    contactsNotified: "Оповещено контактов: {count}",
     emergencyWarning: "Если вы в непосредственной опасности, позвоните в службу спасения.",
   },
 
@@ -127,10 +132,19 @@ export const ru: Messages = {
   chat: {
     title: "ИИ Чат",
     titleDiscreet: "Помощник",
+    subtitle: "Задавайте вопросы и получайте подсказки по поддержке.",
+    subtitleDiscreet: "Пишите заметки и получайте рекомендации.",
     placeholder: "ИИ-помощник будет доступен здесь в фазе 2.",
     unavailable: "Чат временно недоступен. Функция в разработке.",
     inputPlaceholder: "Введите сообщение...",
     send: "Отправить",
+    archive: "Архив чатов",
+    newChat: "Новый чат",
+    newChatTitle: "Новый диалог",
+    deleteChat: "Удалить",
+    messagesCount: "сообщений",
+    welcomeMessage: "Здравствуйте! Это шаблон AI-помощника. В рабочей версии ответ будет приходить от реального AI-сервиса.",
+    botPlaceholder: "Шаблонный ответ: здесь будет подключен AI.",
   },
 
   // Centers page

@@ -1,19 +1,72 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import Link from "next/link"
-import { ShieldAlert, CheckCircle2, ArrowLeft, Loader2 } from "lucide-react"
+import { ShieldAlert, CheckCircle2, ArrowLeft, Loader2, Phone, Plus, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useDiscreet } from "@/components/discreet-provider"
 import { useLanguage } from "@/hooks/use-language"
-import { getLabel } from "@/lib/discreet-labels"
+import { Input } from "@/components/ui/input"
 
 type SosState = "confirm" | "sending" | "sent"
+type SavedContact = { id: string; name: string; phone: string }
+
+const SOS_CONTACTS_KEY = "jaryk-sos-contacts"
 
 export default function SosPage() {
   const [state, setState] = useState<SosState>("confirm")
+  const [contacts, setContacts] = useState<SavedContact[]>([])
+  const [contactName, setContactName] = useState("")
+  const [contactPhone, setContactPhone] = useState("")
   const { isDiscreet } = useDiscreet()
   const { t } = useLanguage()
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(SOS_CONTACTS_KEY)
+      if (!raw) return
+      const parsed = JSON.parse(raw) as SavedContact[]
+      if (Array.isArray(parsed)) {
+        setContacts(parsed.filter((item) => item?.name && item?.phone))
+      }
+    } catch {
+      // localStorage unavailable or corrupted
+    }
+  }, [])
+
+  const persistContacts = useCallback((nextContacts: SavedContact[]) => {
+    setContacts(nextContacts)
+    try {
+      localStorage.setItem(SOS_CONTACTS_KEY, JSON.stringify(nextContacts))
+    } catch {
+      // localStorage unavailable
+    }
+  }, [])
+
+  const handleAddContact = useCallback(() => {
+    const name = contactName.trim()
+    const phone = contactPhone.trim()
+
+    if (!name || !phone) {
+      return
+    }
+
+    persistContacts([
+      ...contacts,
+      {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        name,
+        phone,
+      },
+    ])
+
+    setContactName("")
+    setContactPhone("")
+  }, [contactName, contactPhone, contacts, persistContacts])
+
+  const handleRemoveContact = useCallback((id: string) => {
+    persistContacts(contacts.filter((contact) => contact.id !== id))
+  }, [contacts, persistContacts])
 
   const handleSend = useCallback(() => {
     setState("sending")
@@ -56,8 +109,61 @@ export default function SosPage() {
               {t.nav.sos}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              {t.sos.confirmDesc}
+              {isDiscreet ? t.sos.confirmDescDiscreet : t.sos.confirmDesc}
             </p>
+          </div>
+
+          <div className="w-full rounded-xl border bg-card p-4 text-left">
+            <p className="mb-3 text-sm font-medium text-foreground">{t.sos.savedContacts}</p>
+
+            {contacts.length === 0 ? (
+              <p className="mb-3 text-xs text-muted-foreground">{t.sos.noSavedContacts}</p>
+            ) : (
+              <ul className="mb-3 flex flex-col gap-2">
+                {contacts.map((contact) => (
+                  <li key={contact.id} className="flex items-center justify-between rounded-lg border bg-background px-3 py-2">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-foreground">{contact.name}</p>
+                      <p className="truncate text-xs text-muted-foreground">{contact.phone}</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleRemoveContact(contact.id)}
+                      aria-label={t.sos.removeContact}
+                    >
+                      <Trash2 className="size-4 text-muted-foreground" aria-hidden="true" />
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div className="grid grid-cols-1 gap-2">
+              <Input
+                value={contactName}
+                onChange={(e) => setContactName(e.target.value)}
+                placeholder={t.profile.contactName}
+                aria-label={t.profile.contactName}
+              />
+              <Input
+                value={contactPhone}
+                onChange={(e) => setContactPhone(e.target.value)}
+                placeholder={t.profile.contactPhone}
+                aria-label={t.profile.contactPhone}
+              />
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleAddContact}
+                disabled={!contactName.trim() || !contactPhone.trim()}
+                className="w-full"
+              >
+                <Plus className="size-4" aria-hidden="true" />
+                {t.profile.addContact}
+              </Button>
+            </div>
           </div>
 
           <div className="flex w-full flex-col gap-3">
@@ -66,8 +172,9 @@ export default function SosPage() {
               size="lg"
               className="w-full rounded-xl h-14 text-base font-semibold bg-jaryk-sos text-jaryk-sos-foreground hover:bg-jaryk-sos/90"
               aria-label={t.sos.confirm}
+              disabled={contacts.length === 0}
             >
-              {t.sos.confirm}
+              {isDiscreet ? t.sos.confirmDiscreet : t.sos.confirm}
             </Button>
             <Button
               variant="outline"
@@ -80,7 +187,9 @@ export default function SosPage() {
           </div>
 
           <p className="text-xs text-muted-foreground">
-            {t.sos.info}
+            {contacts.length === 0
+              ? t.sos.addAtLeastOneContact
+              : (isDiscreet ? t.sos.infoDiscreet : t.sos.info)}
           </p>
         </div>
       </div>
@@ -98,12 +207,17 @@ export default function SosPage() {
 
           <div>
             <h1 className="text-xl font-bold text-foreground">
-              {t.sos.sending}
+              {isDiscreet ? t.sos.sendingDiscreet : t.sos.sending}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              {t.sos.sendingDesc}
+              {isDiscreet ? t.sos.sendingDescDiscreet : t.sos.sendingDesc}
             </p>
           </div>
+
+          <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+            <Phone className="size-3.5" aria-hidden="true" />
+            {t.sos.contactsNotified.replace("{count}", String(contacts.length))}
+          </p>
         </div>
       </div>
     )
@@ -119,12 +233,17 @@ export default function SosPage() {
 
         <div>
           <h1 className="text-2xl font-bold text-foreground">
-            {t.sos.sent}
+            {isDiscreet ? t.sos.sentDiscreet : t.sos.sent}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-            {t.sos.sentDesc}
+            {isDiscreet ? t.sos.sentDescDiscreet : t.sos.sentDesc}
           </p>
         </div>
+
+        <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+          <Phone className="size-3.5" aria-hidden="true" />
+          {t.sos.contactsNotified.replace("{count}", String(contacts.length))}
+        </p>
 
         <div className="flex w-full flex-col gap-3">
           <Button
