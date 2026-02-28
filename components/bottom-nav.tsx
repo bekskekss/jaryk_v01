@@ -37,7 +37,7 @@ export function BottomNav() {
       aria-label="Main navigation"
       className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/95 backdrop-blur-sm lg:hidden"
     >
-      <ul className="flex items-center justify-around px-2 py-1">
+      <ul className="grid grid-cols-5 items-stretch px-1 py-1">
         {navItems.map((item) => {
           const isActive =
             pathname === item.href || pathname.startsWith(item.href + "/")
@@ -46,11 +46,11 @@ export function BottomNav() {
           const label = getNavLabel(item.key)
 
           return (
-            <li key={item.href}>
+            <li key={item.href} className="min-w-0">
               <Link
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center gap-0.5 rounded-lg px-3 py-2 text-[11px] font-medium transition-colors",
+                  "flex w-full flex-col items-center gap-0.5 rounded-lg px-1 py-2 text-center text-[10px] font-medium leading-tight transition-colors",
                   isSos
                     ? "text-jaryk-sos"
                     : isActive
@@ -70,7 +70,7 @@ export function BottomNav() {
                   )}
                   aria-hidden="true"
                 />
-                {label}
+                <span className="max-w-full truncate">{label}</span>
               </Link>
             </li>
           )

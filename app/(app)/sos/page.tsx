@@ -86,18 +86,18 @@ export default function SosPage() {
   // Confirmation Screen
   if (state === "confirm") {
     return (
-      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
-        <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-8 text-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleCancel}
-            className="self-start -ml-2"
-          >
-            <ArrowLeft className="size-4" aria-hidden="true" />
-            {t.common.back}
-          </Button>
+      <div className="flex flex-1 flex-col px-4 pt-4 pb-8 sm:px-6">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleCancel}
+          className="-ml-2 mb-4 w-fit"
+        >
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          {t.common.back}
+        </Button>
 
+        <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-8 text-center">
           <div className="flex size-28 items-center justify-center rounded-full bg-jaryk-sos/10">
             <div className="flex size-20 items-center justify-center rounded-full bg-jaryk-sos/20">
               <ShieldAlert className="size-10 text-jaryk-sos" aria-hidden="true" />

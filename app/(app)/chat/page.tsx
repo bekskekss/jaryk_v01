@@ -169,7 +169,7 @@ export default function ChatPage() {
   }, [activeThread, draft, persistThreads, t.chat.botPlaceholder, t.chat.newChatTitle, threads])
 
   return (
-    <div className="flex flex-1 flex-col px-4 pt-4 pb-24 lg:px-8 lg:pt-8 lg:pb-6">
+    <div className="flex min-h-0 flex-1 flex-col px-4 pt-4 pb-4 lg:px-8 lg:pt-8 lg:pb-6">
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
           {title}
@@ -193,7 +193,7 @@ export default function ChatPage() {
         </Button>
       </div>
 
-      <div className="grid flex-1 grid-cols-1 gap-3 md:grid-cols-[300px_minmax(0,1fr)]">
+      <div className="flex min-h-0 flex-1 flex-col gap-3 md:grid md:grid-cols-[300px_minmax(0,1fr)]">
         <aside
           className={`rounded-xl border bg-card p-3 ${showArchive ? "block" : "hidden"} md:block`}
         >
@@ -245,7 +245,7 @@ export default function ChatPage() {
         </aside>
 
         <section
-          className={`flex min-h-[60dvh] flex-col rounded-xl border bg-card ${showArchive ? "hidden md:flex" : "flex"}`}
+          className={`flex min-h-0 flex-1 flex-col rounded-none border-x-0 bg-background md:rounded-xl md:border md:bg-card ${showArchive ? "hidden md:flex" : "flex"}`}
         >
           <div className="border-b px-4 py-3">
             <p className="truncate text-sm font-semibold text-foreground">
