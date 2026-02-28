@@ -122,4 +122,19 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  button,
+  [data-slot='button'],
+  a[role='button'] {
+    -webkit-tap-highlight-color: rgba(15, 23, 42, 0.18);
+    touch-action: manipulation;
+    transition: transform 120ms ease, opacity 120ms ease;
+  }
+
+  button:active,
+  [data-slot='button']:active,
+  a[role='button']:active {
+    transform: scale(0.98);
+    opacity: 0.86;
+  }
 }

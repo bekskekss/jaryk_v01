@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
 import { LogOut, Settings as SettingsIcon, ShieldAlert, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -22,6 +23,7 @@ export default function ProfilePage() {
   const { t } = useLanguage()
   const { isDiscreet } = useDiscreet()
   const { state, isGuest, updateProfile, signOut } = useAuth()
+  const router = useRouter()
 
   const [savedContacts, setSavedContacts] = useState<SavedContact[]>([])
   const [isEditing, setIsEditing] = useState(false)
@@ -83,8 +85,13 @@ export default function ProfilePage() {
     setIsEditing(false)
   }, [emailDraft, isGuest, nameDraft, phoneDraft, updateProfile])
 
+  const handleSignOut = useCallback(() => {
+    signOut()
+    router.replace("/")
+  }, [router, signOut])
+
   return (
-    <div className="flex flex-col gap-6 px-4 pt-6 pb-24 lg:pb-6 lg:px-8 lg:pt-8">
+    <div className="flex flex-col gap-4 px-4 pt-6 pb-24 lg:pb-6 lg:px-8 lg:pt-8">
       <header>
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
           {t.nav.profile}
@@ -95,7 +102,7 @@ export default function ProfilePage() {
       </header>
 
       <Card>
-        <CardContent className="flex items-center gap-4 p-5">
+        <CardContent className="flex items-center gap-3 p-4">
           <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-jaryk-violet-light">
             <User className="size-7 text-jaryk-violet" aria-hidden="true" />
           </div>
@@ -110,14 +117,14 @@ export default function ProfilePage() {
       </Card>
 
       <Card>
-        <CardHeader className="pb-3">
+        <CardHeader className="pb-2">
           <CardTitle className="text-base">{t.profile.personalInfo}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-2.5">
           {isGuest ? (
             <div className="rounded-xl border bg-muted/40 p-4">
               <p className="text-sm text-muted-foreground">{t.auth.guestNote}</p>
-              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+              <div className="mt-2.5 flex flex-col gap-2 sm:flex-row">
                 <Button asChild className="w-full sm:w-auto">
                   <Link href="/auth">{t.auth.signIn}</Link>
                 </Button>
@@ -128,7 +135,7 @@ export default function ProfilePage() {
             </div>
           ) : (
             <>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <p className="text-xs font-medium text-muted-foreground">{t.profile.name}</p>
                 {isEditing ? (
                   <Input
@@ -141,7 +148,7 @@ export default function ProfilePage() {
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <p className="text-xs font-medium text-muted-foreground">{t.profile.email}</p>
                 {isEditing ? (
                   <Input
@@ -155,7 +162,7 @@ export default function ProfilePage() {
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <p className="text-xs font-medium text-muted-foreground">{t.profile.phone}</p>
                 {isEditing ? (
                   <Input
@@ -193,12 +200,12 @@ export default function ProfilePage() {
       </Card>
 
       <Card>
-        <CardHeader className="pb-3">
+        <CardHeader className="pb-2">
           <CardTitle className="text-base">
             {isDiscreet ? t.profile.emergencyContactDiscreet : t.profile.emergencyContact}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-2.5">
           {savedContacts.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t.sos.noSavedContacts}</p>
           ) : (
@@ -221,7 +228,7 @@ export default function ProfilePage() {
       </Card>
 
       <Card>
-        <CardContent className="flex flex-col gap-2 p-4 sm:flex-row">
+        <CardContent className="flex flex-col gap-2 p-3.5 sm:flex-row">
           <Button asChild className="w-full sm:w-auto">
             <Link href="/settings">
               <SettingsIcon className="size-4" aria-hidden="true" />
@@ -229,9 +236,9 @@ export default function ProfilePage() {
             </Link>
           </Button>
           {!isGuest && (
-            <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={signOut}>
+            <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleSignOut}>
               <LogOut className="size-4" aria-hidden="true" />
-              {t.auth.continueGuest}
+              {t.auth.signOut}
             </Button>
           )}
         </CardContent>

@@ -12,6 +12,7 @@ type SosState = "confirm" | "sending" | "sent"
 type SavedContact = { id: string; name: string; phone: string }
 
 const SOS_CONTACTS_KEY = "jaryk-sos-contacts"
+const MAX_SOS_CONTACTS = 5
 
 export default function SosPage() {
   const [state, setState] = useState<SosState>("confirm")
@@ -20,6 +21,7 @@ export default function SosPage() {
   const [contactPhone, setContactPhone] = useState("")
   const { isDiscreet } = useDiscreet()
   const { t } = useLanguage()
+  const hasReachedContactLimit = contacts.length >= MAX_SOS_CONTACTS
 
   useEffect(() => {
     try {
@@ -47,7 +49,7 @@ export default function SosPage() {
     const name = contactName.trim()
     const phone = contactPhone.trim()
 
-    if (!name || !phone) {
+    if (!name || !phone || contacts.length >= MAX_SOS_CONTACTS) {
       return
     }
 
@@ -157,12 +159,18 @@ export default function SosPage() {
                 type="button"
                 variant="secondary"
                 onClick={handleAddContact}
-                disabled={!contactName.trim() || !contactPhone.trim()}
+                disabled={!contactName.trim() || !contactPhone.trim() || hasReachedContactLimit}
                 className="w-full"
               >
                 <Plus className="size-4" aria-hidden="true" />
                 {t.profile.addContact}
               </Button>
+
+              {hasReachedContactLimit && (
+                <p className="text-xs text-muted-foreground">
+                  {t.sos.maxContactsReached.replace("{max}", String(MAX_SOS_CONTACTS))}
+                </p>
+              )}
             </div>
           </div>
 
@@ -187,7 +195,9 @@ export default function SosPage() {
           </div>
 
           <p className="text-xs text-muted-foreground">
-            {contacts.length === 0
+            {hasReachedContactLimit
+              ? t.sos.maxContactsReached.replace("{max}", String(MAX_SOS_CONTACTS))
+              : contacts.length === 0
               ? t.sos.addAtLeastOneContact
               : (isDiscreet ? t.sos.infoDiscreet : t.sos.info)}
           </p>

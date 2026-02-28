@@ -184,15 +184,11 @@ export default function ChatPage() {
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:px-8 md:pt-6 md:pb-6">
       <header className="border-b bg-background/95 px-4 py-3 backdrop-blur md:rounded-t-2xl md:border md:px-5">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start gap-3">
           <div className="min-w-0">
             <h1 className="truncate text-lg font-semibold text-foreground md:text-xl">{title}</h1>
             <p className="mt-0.5 truncate text-xs text-muted-foreground md:text-sm">{subtitle}</p>
           </div>
-          <Button type="button" size="sm" onClick={handleCreateChat} className="hidden md:inline-flex">
-            <Plus className="size-4" />
-            {t.chat.newChat}
-          </Button>
         </div>
 
         <div className="mt-3 flex items-center gap-2 md:hidden">

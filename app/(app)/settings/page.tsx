@@ -56,30 +56,6 @@ export default function SettingsPage() {
           <LanguageSwitcher />
         </CardContent>
       </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">{t.settings.notifications}</CardTitle>
-          <CardDescription>
-            {t.settings.comingSoon}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-xs text-muted-foreground">{t.common.phase3}</p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">{t.settings.privacy}</CardTitle>
-          <CardDescription>
-            {t.settings.comingSoon}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-xs text-muted-foreground">{t.common.phase3}</p>
-        </CardContent>
-      </Card>
     </div>
   )
 }
