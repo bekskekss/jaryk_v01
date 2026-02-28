@@ -22,15 +22,15 @@ interface LanguageContextValue {
 }
 
 export const LanguageContext = createContext<LanguageContextValue>({
-  locale: "en",
-  t: en,
+  locale: "ru",
+  t: ru,
   setLocale: () => {},
 })
 
 const STORAGE_KEY = "jaryk-locale"
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en")
+  const [locale, setLocaleState] = useState<Locale>("ru")
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -44,6 +44,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    document.documentElement.lang = locale
+  }, [locale])
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale)

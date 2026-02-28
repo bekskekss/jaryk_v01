@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   Plus,
   Send,
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useLanguage } from "@/hooks/use-language"
 import { useDiscreet } from "@/components/discreet-provider"
+import { cn } from "@/lib/utils"
 
 type ChatMessage = {
   id: string
@@ -68,6 +69,8 @@ export default function ChatPage() {
   const [activeThreadId, setActiveThreadId] = useState<string>("")
   const [draft, setDraft] = useState("")
   const [showArchive, setShowArchive] = useState(false)
+  const [dateLabel, setDateLabel] = useState("")
+  const messagesViewportRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     try {
@@ -168,34 +171,53 @@ export default function ChatPage() {
     setDraft("")
   }, [activeThread, draft, persistThreads, t.chat.botPlaceholder, t.chat.newChatTitle, threads])
 
+  useEffect(() => {
+    const viewport = messagesViewportRef.current
+    if (!viewport || showArchive) return
+    viewport.scrollTop = viewport.scrollHeight
+  }, [activeThreadId, activeThread?.messages.length, showArchive])
+
+  useEffect(() => {
+    setDateLabel(new Date().toLocaleDateString())
+  }, [])
+
   return (
-    <div className="flex min-h-0 flex-1 flex-col px-4 pt-4 pb-4 lg:px-8 lg:pt-8 lg:pb-6">
-      <header className="mb-4">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
-          {title}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:px-8 md:pt-6 md:pb-6">
+      <header className="border-b bg-background/95 px-4 py-3 backdrop-blur md:rounded-t-2xl md:border md:px-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="truncate text-lg font-semibold text-foreground md:text-xl">{title}</h1>
+            <p className="mt-0.5 truncate text-xs text-muted-foreground md:text-sm">{subtitle}</p>
+          </div>
+          <Button type="button" size="sm" onClick={handleCreateChat} className="hidden md:inline-flex">
+            <Plus className="size-4" />
+            {t.chat.newChat}
+          </Button>
+        </div>
+
+        <div className="mt-3 flex items-center gap-2 md:hidden">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setShowArchive((prev) => !prev)}
+          >
+            {showArchive ? <ArrowLeft className="size-4" /> : <Archive className="size-4" />}
+            {showArchive ? t.common.back : t.chat.archive}
+          </Button>
+          <Button type="button" size="sm" onClick={handleCreateChat}>
+            <Plus className="size-4" />
+            {t.chat.newChat}
+          </Button>
+        </div>
       </header>
 
-      <div className="mb-3 flex items-center gap-2 md:hidden">
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={() => setShowArchive((prev) => !prev)}
-        >
-          {showArchive ? <ArrowLeft className="size-4" /> : <Archive className="size-4" />}
-          {showArchive ? t.common.back : t.chat.archive}
-        </Button>
-        <Button type="button" size="sm" onClick={handleCreateChat}>
-          <Plus className="size-4" />
-          {t.chat.newChat}
-        </Button>
-      </div>
-
-      <div className="flex min-h-0 flex-1 flex-col gap-3 md:grid md:grid-cols-[300px_minmax(0,1fr)]">
+      <div className="flex min-h-0 flex-1 overflow-hidden md:rounded-b-2xl md:border md:border-t-0 md:bg-card">
         <aside
-          className={`rounded-xl border bg-card p-3 ${showArchive ? "block" : "hidden"} md:block`}
+          className={cn(
+            "min-h-0 w-full border-r bg-card p-3 md:block md:w-[300px]",
+            showArchive ? "block" : "hidden md:block"
+          )}
         >
           <div className="mb-3 hidden items-center justify-between md:flex">
             <p className="text-sm font-semibold text-foreground">{t.chat.archive}</p>
@@ -205,8 +227,8 @@ export default function ChatPage() {
             </Button>
           </div>
 
-          <div className="max-h-[45dvh] overflow-auto md:max-h-[calc(100dvh-280px)]">
-            <ul className="space-y-2">
+          <div className="h-full overflow-auto">
+            <ul className="space-y-2 pb-2">
               {threads.map((thread) => (
                 <li key={thread.id}>
                   <button
@@ -215,11 +237,12 @@ export default function ChatPage() {
                       setActiveThreadId(thread.id)
                       setShowArchive(false)
                     }}
-                    className={`w-full rounded-lg border p-3 text-left transition-colors ${
+                    className={cn(
+                      "w-full rounded-2xl border p-3 text-left transition-colors",
                       thread.id === activeThreadId
-                        ? "border-primary bg-primary/5"
-                        : "hover:bg-muted"
-                    }`}
+                        ? "border-primary/40 bg-primary/10"
+                        : "border-border/60 hover:bg-muted"
+                    )}
                   >
                     <p className="truncate text-sm font-medium text-foreground">{thread.title}</p>
                     <p className="mt-1 text-xs text-muted-foreground">
@@ -244,38 +267,68 @@ export default function ChatPage() {
           </div>
         </aside>
 
-        <section
-          className={`flex min-h-0 flex-1 flex-col rounded-none border-x-0 bg-background md:rounded-xl md:border md:bg-card ${showArchive ? "hidden md:flex" : "flex"}`}
-        >
-          <div className="border-b px-4 py-3">
-            <p className="truncate text-sm font-semibold text-foreground">
-              {activeThread?.title ?? t.chat.newChatTitle}
-            </p>
-          </div>
-
-          <div className="flex-1 space-y-3 overflow-auto px-3 py-4 md:px-4">
-            {activeThread?.messages.map((message) => (
-              <div
-                key={message.id}
-                className={`max-w-[88%] rounded-2xl px-3 py-2 text-sm leading-relaxed md:max-w-[75%] ${
-                  message.role === "user"
-                    ? "ml-auto bg-primary text-primary-foreground"
-                    : "bg-muted text-foreground"
-                }`}
-              >
-                <p>{message.text}</p>
-                <p className="mt-1 text-[10px] opacity-70">{formatTime(message.createdAt)}</p>
+        <section className={cn("flex min-h-0 flex-1 flex-col bg-background", showArchive ? "hidden md:flex" : "flex")}>
+          <div className="border-b bg-background/95 px-4 py-3 backdrop-blur md:px-5">
+            <div className="flex items-center gap-3">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-xs font-semibold text-primary">
+                AI
               </div>
-            ))}
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-foreground">
+                  {activeThread?.title ?? t.chat.newChatTitle}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {activeThread?.messages.length ?? 0} {t.chat.messagesCount}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="border-t p-3 md:p-4">
-            <div className="flex items-center gap-2">
+          <div
+            ref={messagesViewportRef}
+            className="flex-1 overflow-y-auto bg-gradient-to-b from-background via-background to-muted/25 px-3 py-4 md:px-5"
+          >
+            <div className="mx-auto mb-4 w-fit rounded-full border border-border/70 bg-card px-3 py-1 text-[11px] text-muted-foreground">
+              {dateLabel || "\u00A0"}
+            </div>
+            <div className="mx-auto flex w-full max-w-3xl flex-col gap-2.5">
+              {activeThread?.messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={cn(
+                    "max-w-[84%] rounded-[22px] px-3.5 py-2.5 text-sm leading-relaxed",
+                    message.role === "user"
+                      ? "ml-auto rounded-br-md bg-primary text-primary-foreground"
+                      : "mr-auto rounded-bl-md bg-card text-foreground shadow-sm ring-1 ring-border/70"
+                  )}
+                >
+                  <p>{message.text}</p>
+                  <p className={cn("mt-1 text-[10px] opacity-70", message.role === "user" ? "text-right" : "text-left")}>
+                    {formatTime(message.createdAt)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t bg-background/95 px-3 py-3 backdrop-blur md:px-5 md:py-4">
+            <div className="mx-auto flex w-full max-w-3xl items-center gap-2 rounded-full border border-border/70 bg-card px-2 py-1.5 shadow-sm">
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="size-8 rounded-full text-muted-foreground hover:text-foreground"
+                onClick={handleCreateChat}
+                aria-label={t.chat.newChat}
+              >
+                <Plus className="size-4" />
+              </Button>
               <Input
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder={t.chat.inputPlaceholder}
                 aria-label={t.chat.inputPlaceholder}
+                className="h-9 border-0 bg-transparent px-1 shadow-none focus-visible:border-transparent focus-visible:ring-0"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault()
@@ -283,9 +336,15 @@ export default function ChatPage() {
                   }
                 }}
               />
-              <Button type="button" onClick={handleSend} disabled={!draft.trim()}>
+              <Button
+                type="button"
+                size="icon"
+                className="size-8 rounded-full"
+                onClick={handleSend}
+                disabled={!draft.trim()}
+                aria-label={t.chat.send}
+              >
                 <Send className="size-4" />
-                <span className="hidden sm:inline">{t.chat.send}</span>
               </Button>
             </div>
           </div>

@@ -3,12 +3,14 @@ export type ContactCategory = "emergency" | "hotline" | "legal" | "psychological
 export interface SupportContact {
   id: string
   name: string
+  nameRu?: string
   nameDiscreet: string
   category: ContactCategory
   phone: string
   description: string
   descriptionDiscreet: string
   available: string
+  availableRu?: string
   location?: string
 }
 
@@ -16,32 +18,38 @@ export const supportContacts: SupportContact[] = [
   {
     id: "emergency-112",
     name: "Emergency Services",
+    nameRu: "Экстренные службы",
     nameDiscreet: "General Services",
     category: "emergency",
     phone: "112",
     description: "National emergency number for immediate danger",
     descriptionDiscreet: "National general services line",
     available: "24/7",
+    availableRu: "Круглосуточно",
   },
   {
     id: "hotline-crisis",
     name: "Crisis Support Hotline",
+    nameRu: "Кризисная линия поддержки",
     nameDiscreet: "Support Line",
     category: "hotline",
     phone: "+996 312 654 321",
     description: "Confidential crisis support for women facing violence",
     descriptionDiscreet: "Confidential support line",
     available: "24/7",
+    availableRu: "Круглосуточно",
   },
   {
     id: "hotline-womens-center",
     name: "Women's Support Center",
+    nameRu: "Женский центр поддержки",
     nameDiscreet: "Community Center",
     category: "hotline",
     phone: "+996 312 987 654",
     description: "Free counseling and temporary shelter referrals",
     descriptionDiscreet: "Community assistance center",
     available: "Mon-Fri, 9:00-18:00",
+    availableRu: "Пн-Пт, 9:00-18:00",
   },
   {
     id: "legal-aid",
@@ -52,6 +60,7 @@ export const supportContacts: SupportContact[] = [
     description: "Free legal consultations and court representation",
     descriptionDiscreet: "Professional advisory services",
     available: "Mon-Fri, 9:00-17:00",
+    availableRu: "Пн-Пт, 9:00-17:00",
     location: "Bishkek",
   },
   {
@@ -63,6 +72,7 @@ export const supportContacts: SupportContact[] = [
     description: "Protection orders and legal advocacy",
     descriptionDiscreet: "Civic assistance center",
     available: "Mon-Sat, 10:00-18:00",
+    availableRu: "Пн-Сб, 10:00-18:00",
     location: "Bishkek",
   },
   {
@@ -74,6 +84,7 @@ export const supportContacts: SupportContact[] = [
     description: "Free psychological counseling and trauma support",
     descriptionDiscreet: "Wellness and wellbeing services",
     available: "Mon-Fri, 9:00-17:00",
+    availableRu: "Пн-Пт, 9:00-17:00",
     location: "Bishkek",
   },
   {
@@ -85,6 +96,7 @@ export const supportContacts: SupportContact[] = [
     description: "Anonymous mental health support and referrals",
     descriptionDiscreet: "General health support line",
     available: "24/7",
+    availableRu: "Круглосуточно",
   },
 ]
 

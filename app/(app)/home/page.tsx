@@ -18,7 +18,7 @@ import { supportContacts } from "@/data/support-contacts"
 
 export default function HomePage() {
   const { isDiscreet } = useDiscreet()
-  const { t } = useLanguage()
+  const { t, locale } = useLanguage()
   
   const quickActions = [
     {
@@ -138,18 +138,26 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">
-                    {isDiscreet ? contact.nameDiscreet : contact.name}
+                    {isDiscreet
+                      ? contact.nameDiscreet
+                      : locale === "ru"
+                        ? contact.nameRu ?? contact.name
+                        : contact.name}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {contact.available}
+                    {locale === "ru" ? contact.availableRu ?? contact.available : contact.available}
                   </p>
                 </div>
                 <a
                   href={`tel:${contact.phone}`}
                   className="shrink-0 rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
-                  aria-label={`Call ${isDiscreet ? contact.nameDiscreet : contact.name}`}
+                  aria-label={`${t.home.call} ${isDiscreet
+                    ? contact.nameDiscreet
+                    : locale === "ru"
+                      ? contact.nameRu ?? contact.name
+                      : contact.name}`}
                 >
-                  Call
+                  {t.home.call}
                 </a>
               </CardContent>
             </Card>

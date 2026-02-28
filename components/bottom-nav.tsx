@@ -35,9 +35,9 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Main navigation"
-      className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/95 backdrop-blur-sm lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 overflow-x-hidden border-t bg-card/95 backdrop-blur-sm lg:hidden"
     >
-      <ul className="grid grid-cols-5 items-stretch px-1 py-1">
+      <ul className="mx-auto flex w-full items-stretch px-[max(env(safe-area-inset-left),0.25rem)] pr-[max(env(safe-area-inset-right),0.25rem)] py-1">
         {navItems.map((item) => {
           const isActive =
             pathname === item.href || pathname.startsWith(item.href + "/")
@@ -46,11 +46,11 @@ export function BottomNav() {
           const label = getNavLabel(item.key)
 
           return (
-            <li key={item.href} className="min-w-0">
+            <li key={item.href} className="min-w-0 flex-1 basis-0">
               <Link
                 href={item.href}
                 className={cn(
-                  "flex w-full flex-col items-center gap-0.5 rounded-lg px-1 py-2 text-center text-[10px] font-medium leading-tight transition-colors",
+                  "grid min-h-14 w-full grid-rows-[20px_12px] place-items-center gap-y-1 rounded-lg px-1 py-2 text-center text-[10px] font-medium leading-tight transition-colors",
                   isSos
                     ? "text-jaryk-sos"
                     : isActive
@@ -70,7 +70,9 @@ export function BottomNav() {
                   )}
                   aria-hidden="true"
                 />
-                <span className="max-w-full truncate">{label}</span>
+                <span className="block h-3 w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                  {label}
+                </span>
               </Link>
             </li>
           )

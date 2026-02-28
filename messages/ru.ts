@@ -12,7 +12,7 @@ export const ru: Messages = {
     hub: "Статьи",
     sos: "SOS",
     chat: "Чат",
-    centers: "Центры помощи",
+    centers: "Центры",
     profile: "Профиль",
     settings: "Настройки",
   },

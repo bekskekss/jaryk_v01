@@ -172,9 +172,25 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scrollbar-gutter: stable;
+    overflow-x: hidden;
+  }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
+}
+
+/* Hide scrollbars globally while preserving scroll behavior */
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 /* Reduced motion support */

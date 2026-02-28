@@ -9,8 +9,8 @@ export const en = {
     home: "Home",
     hub: "Educational Hub",
     sos: "SOS",
-    chat: "AI Chat",
-    centers: "Help Centers",
+    chat: "Chat",
+    centers: "Centers",
     profile: "Profile",
     settings: "Settings",
   },
@@ -128,7 +128,7 @@ export const en = {
 
   // Chat page
   chat: {
-    title: "AI Chat",
+    title: "Chat",
     titleDiscreet: "Assistant",
     subtitle: "Ask questions and get support suggestions.",
     subtitleDiscreet: "Write notes and receive suggestions.",
