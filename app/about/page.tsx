@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/language-provider"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export default function AboutPage() {
   const { t } = useLanguage()
@@ -26,16 +27,19 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-dvh bg-background">
-      <div className="mx-auto max-w-2xl px-6 py-12">
-        <div className="mb-8">
-          <Button asChild variant="ghost" size="sm" className="mb-6 -ml-2">
-            <Link href="/">
-              <ArrowLeft className="size-4" aria-hidden="true" />
-              {t.common.back}
-            </Link>
-          </Button>
+    <div className="relative min-h-dvh bg-background">
+      <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 pt-4 sm:px-6 sm:pt-6">
+        <Button asChild variant="ghost" size="sm" className="-ml-2">
+          <Link href="/">
+            <ArrowLeft className="size-4" aria-hidden="true" />
+            {t.common.back}
+          </Link>
+        </Button>
+        <LanguageSwitcher />
+      </div>
 
+      <div className="mx-auto max-w-2xl px-6 py-12 pt-20 sm:pt-24">
+        <div className="mb-8">
           <h1 className="text-2xl font-bold tracking-tight text-foreground text-balance">
             {t.about.title}
           </h1>

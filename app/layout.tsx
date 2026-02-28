@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { DiscreetProvider } from '@/components/discreet-provider'
 import { LanguageProvider } from '@/components/language-provider'
+import { AuthProvider } from '@/components/auth-provider'
 import './globals.css'
 
 const inter = Inter({
@@ -48,12 +49,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="ru" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="font-sans antialiased">
         <LanguageProvider>
-          <DiscreetProvider>
-            {children}
-          </DiscreetProvider>
+          <AuthProvider>
+            <DiscreetProvider>
+              {children}
+            </DiscreetProvider>
+          </AuthProvider>
         </LanguageProvider>
         <Analytics />
       </body>

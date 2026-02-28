@@ -10,11 +10,12 @@ export default function WelcomePage() {
   const { t } = useLanguage()
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center bg-background px-6 py-12">
-      <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-10 text-center">
-        {/* Language switcher */}
-        <LanguageSwitcher className="self-end" />
+    <div className="relative flex min-h-dvh flex-col items-center justify-center bg-background px-6 py-12">
+      <div className="absolute inset-x-0 top-0 z-10 flex justify-end px-4 pt-4 sm:px-6 sm:pt-6">
+        <LanguageSwitcher />
+      </div>
 
+      <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-10 text-center">
         {/* Logo */}
         <div className="flex flex-col items-center gap-4">
           <div className="flex size-16 items-center justify-center rounded-2xl bg-primary shadow-sm">

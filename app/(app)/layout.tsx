@@ -8,9 +8,9 @@ export default function AppLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex min-h-dvh bg-background">
+    <div className="flex h-dvh overflow-hidden bg-background">
       <DesktopSidebar />
-      <main className="flex flex-1 flex-col pb-20 lg:pb-0">
+      <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto pb-20 lg:pb-0">
         <QuickExitButton />
         {children}
       </main>
