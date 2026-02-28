@@ -227,16 +227,16 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardContent className="flex flex-col gap-2 p-3.5 sm:flex-row">
-          <Button asChild className="w-full sm:w-auto">
+      <Card className="w-full lg:w-[250px] lg:self-start lg:rounded-2xl lg:border-border/70 lg:shadow-md">
+        <CardContent className="flex flex-col gap-2 p-3.5">
+          <Button asChild className="w-full">
             <Link href="/settings">
               <SettingsIcon className="size-4" aria-hidden="true" />
               {t.nav.settings}
             </Link>
           </Button>
           {!isGuest && (
-            <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleSignOut}>
+            <Button type="button" variant="outline" className="w-full" onClick={handleSignOut}>
               <LogOut className="size-4" aria-hidden="true" />
               {t.auth.signOut}
             </Button>
