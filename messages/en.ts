@@ -106,6 +106,11 @@ export const en = {
     callEmergency: "Call 112",
     info: "Your emergency contacts will receive your GPS location via SMS.",
     infoDiscreet: "Your contacts will receive your location.",
+    savedContacts: "Saved contacts",
+    noSavedContacts: "No saved contacts yet.",
+    removeContact: "Remove contact",
+    addAtLeastOneContact: "Add at least one contact to enable SOS sending.",
+    contactsNotified: "Contacts notified: {count}",
     emergencyWarning: "If you are in immediate danger, call emergency services directly.",
   },
 
@@ -125,10 +130,19 @@ export const en = {
   chat: {
     title: "AI Chat",
     titleDiscreet: "Assistant",
+    subtitle: "Ask questions and get support suggestions.",
+    subtitleDiscreet: "Write notes and receive suggestions.",
     placeholder: "The AI assistant will be available here in Phase 2.",
     unavailable: "Chat is currently unavailable. This feature is under development.",
     inputPlaceholder: "Type your message...",
     send: "Send",
+    archive: "Chat archive",
+    newChat: "New chat",
+    newChatTitle: "New conversation",
+    deleteChat: "Delete",
+    messagesCount: "messages",
+    welcomeMessage: "Hello! I am your AI assistant template. In a production version, this response will come from a real AI service.",
+    botPlaceholder: "Template reply: AI integration will be connected here.",
   },
 
   // Centers page
